@@ -35,10 +35,13 @@ def count_unique(input_string):
     dictionary = {}
 
     for word in word_list:          #if word not in dictionary, create the value at 1.
-        if word not in dictionary:
-            dictionary[word] = 1
-        else:
-            dictionary[word] = dictionary[word] + 1 #if it is in dictionary, add one to value
+        dictionary[word] = dictionary.get(word, 0) + 1 #using heather's suggestion
+
+#my first method
+        # if word not in dictionary:
+        #     dictionary[word] = 1
+        # else:
+        #     dictionary[word] = dictionary[word] + 1 #if it is in dictionary, add one to value
 
 
     return dictionary
@@ -143,27 +146,34 @@ def get_sum_zero_pairs(input_list):
 
     """
 
-    sum_zero_pair_dictionary = {}
+    sum_zero_pair_list = []
+    input_set = set(input_list)
 
     #iterate through each number in the input list.  
-    for number in input_list:
+    for number in input_set:
+    #heather's suggested approach with sets but when i run outside this assignment as test, its fine, here i get 2 copies
+        for next_number in input_set:
+            if number + next_number == 0:
+                sum_zero_pair_list.append((number, next_number))
+
+
+#my way
+    #     for n in range(len(input_list) - input_list.index(number)): 
+    #         #create a tuple of each number plus every other number in the list, including itself, using index.
+    #         #the range is set up so that you won't get an index out of range error 
+    #         sum_pair_tuple = (number, input_list[input_list.index(number) + n]) 
         
-        for n in range(len(input_list) - input_list.index(number)): 
-            #create a tuple of each number plus every other number in the list, including itself, using index.
-            #the range is set up so that you won't get an index out of range error 
-            sum_pair_tuple = (number, input_list[input_list.index(number) + n]) 
-            
-            #evaluate the current pair and if the first and last equal 0, put it in the dictionary as a key-value pair
-            if sum_pair_tuple[0] + sum_pair_tuple[1] == 0:
-                sum_zero_pair_dictionary[sum_pair_tuple[0]] = sum_pair_tuple[1]
+    #         #evaluate the current pair and if the first and last equal 0, put it in the dictionary as a key-value pair
+    #         if sum_pair_tuple[0] + sum_pair_tuple[1] == 0:
+    #             sum_zero_pair_dictionary[sum_pair_tuple[0]] = sum_pair_tuple[1]
 
-    #to weed duplicate pairs (i.e. 1, -1 and -1,1), if a key is also a value, delete it. 
-    #only exception is zero because it is the only number that you can add to itself to get zero
-    for key in sum_zero_pair_dictionary.keys():
-        if key in sum_zero_pair_dictionary.values() and key != 0:
-            del sum_zero_pair_dictionary[key]
+    # #to weed duplicate pairs (i.e. 1, -1 and -1,1), if a key is also a value, delete it. 
+    # #only exception is zero because it is the only number that you can add to itself to get zero
+    # for key in sum_zero_pair_dictionary.keys():
+    #     if key in sum_zero_pair_dictionary.values() and key != 0:
+    #         del sum_zero_pair_dictionary[key]
 
-    return sum_zero_pair_dictionary.items()
+    return sum_zero_pair_list
 
 
 def remove_duplicates(words):
@@ -228,17 +238,27 @@ def sort_by_word_length(words):
     """
 
     dictionary_word_lengths = {}
-    
+    word_length_list = []
+
     # iterate through words in the input list and set key to length of word, value to a list of the word.
     # if the word length is already in, add to the list
 
     for item in words:
-        if len(item) not in dictionary_word_lengths:
-            dictionary_word_lengths[len(item)] = [item]
-        else:
-            dictionary_word_lengths[len(item)].append(item)
+        dictionary_word_lengths.setdefault(len(item), [])
+        dictionary_word_lengths[len(item)].append(item)
 
-    return sorted(dictionary_word_lengths.items())
+    # for values in dictionary_word_lengths.values():
+    #     # print dictionary_word_lengths.values()
+    #     # sorted_values = dictionary_word_lengths.get(values.sort)
+    #     print values.sort()
+
+
+        # if len(item) not in dictionary_word_lengths:
+        #     dictionary_word_lengths[len(item)] = [item]
+        # else:
+        #     dictionary_word_lengths[len(item)].append(item)
+
+    print sorted(dictionary_word_lengths.items())
 
 
 
@@ -379,15 +399,14 @@ def adv_alpha_sort_by_word_length(words):
  #I couldn't get this one to work.... :(
 
     dictionary_word_lengths = {}
-    
+    word_length_list = []
+
     # iterate through words in the input list and set key to length of word, value to a list of the word.
     # if the word length is already in, add to the list
-    
+
     for item in words:
-        if len(item) not in dictionary_word_lengths:
-            dictionary_word_lengths[len(item)] = [item]
-        else:
-            dictionary_word_lengths[len(item)].append(item)
+        dictionary_word_lengths.setdefault(len(item), [])
+        dictionary_word_lengths[len(item)].append(item).sort
 
     return sorted(dictionary_word_lengths.items())
 
