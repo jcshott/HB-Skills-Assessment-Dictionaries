@@ -152,9 +152,9 @@ def get_sum_zero_pairs(input_list):
     #iterate through each number in the input list.  
     for number in input_set:
     #heather's suggested approach with sets but when i run outside this assignment as test, its fine, here i get 2 copies
-        for next_number in input_set:
-            if number + next_number == 0:
-                sum_zero_pair_list.append((number, next_number))
+        if number > 0 and -number in input_set
+        
+            sum_zero_pair_list.append((-number, number))
 
 
 #my way
