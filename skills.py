@@ -73,14 +73,14 @@ def find_common_items(list1, list2):
         [1, 1, 2, 2]
 
     """
-    #TODO: turn this into list comprehension (nested loops)
+       #list comprehension (nested loops)
 
-    common = []
+    common = [item1 for item1 in list1 for item2 in list2 if item1 == item2]
 
-    for item1 in list1:         #loop through every value in list 1
-        for item2 in list2:     #each iteration, loop through each item in list 2
-            if item1 == item2:  #comparing current in list1 to each item in list2
-                common.append(item1) #if they match, add to list
+    # for item1 in list1:         #loop through every value in list 1
+    #     for item2 in list2:     #each iteration, loop through each item in list 2
+    #         if item1 == item2:  #comparing current in list1 to each item in list2
+    #             common.append(item1) #if they match, add to list
     
     return common
 
